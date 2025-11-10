@@ -4,33 +4,39 @@ class interface:
     def __init__(self, root):
         self.root = root
         self.all_algo = ["Search","Sorting","RSA","Recursion","Randomised","Brute force","Fibonacci","Palindrome"]
-        self.all_frames = []
+        self.frames_dict = {}
+
         self.root.title("Algorithm Interface")
         self.root.geometry("1200x800")
 
-        self.create_frames()
+        self.create_intial_frame()
+        for algos in self.all_algo:
+            self.create_all_frames(algos)
+
         self.create_widgets()
+        self.show_frame("Main menu")
 
-        self.show_frame(self.main_menu_frame)
-
-    def show_frame(self, frame):
+    def show_frame(self, frame_name):
+        frame = self.frames_dict[frame_name]
         frame.tkraise()
 
-    def create_frames(self):
+    def create_intial_frame(self):
         self.main_menu_frame = Frame(self.root, bg = "light blue", width = 1200, height = 800)
-        self.all_frames.append(self.main_menu_frame)
+        self.main_menu_frame.grid(row=0, column=0, sticky="nsew")
+        self.frames_dict["Main menu"] = self.main_menu_frame
 
-        # for algorithm in self.all_algo:
-        #     self.algorithm = Frame(self.root, bg = "light blue", width = 1200, height = 800)
-        #     self.all_frames.append(self.algorithm)
+    def create_all_frames(self, algorithm_name, y_pos = 50):
+        self.frame = Frame(self.root, bg = "light blue", width = 1200, height = 800)
+        self.frame.grid(row=0, column=0, sticky="nsew")
+        self.frames_dict[algorithm_name] = self.frame
 
-        for frame in self.all_frames:
-            frame.pack()
+        Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", fg = "black").place(x = 10)
+        Button(self.frame, text="Back to Main Menu", command=lambda: self.show_frame("Main menu")).place(x = 10, y = y_pos)
     
     def create_widgets(self, y_pos = 50):
-        Label(self.main_menu_frame, text = "Main menu - Select Algorithm", font = (20), bg = "light blue", ).place(x = 10)
+        Label(self.main_menu_frame, text = "Main menu - Select Algorithm", font = (20), bg = "light blue", fg = "black").place(x = 10)
         for algorithm in self.all_algo:
-            Button(self.main_menu_frame, text = f"{algorithm} Algorithm", font = (20)).place(x = 10, y = y_pos)
+            Button(self.main_menu_frame, text = f"{algorithm} Algorithm", font = (20), command=lambda a=algorithm: self.show_frame(a)).place(x = 10, y = y_pos)
             y_pos += 50
 
 if __name__ == "__main__":
