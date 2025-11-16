@@ -1,12 +1,12 @@
 from tkinter import *
-from palindrome import palindrome_frame
+from palindrome import palindrome
+from factorial import factorial_frame
 
 
 class interface:
     def __init__(self, root):
         self.root = root
-        self.current_frame = "Main menu" # used to Keep track of which frame the program is currently on
-        self.all_algo = ["Search","Sorting","RSA","Recursion","Randomised","Brute force","Fibonacci","Palindrome"]
+        self.all_algo = ["Search","Sorting","RSA","Factorial","Randomised","Brute force","Fibonacci","Palindrome"]
         self.frames_dict = {}
 
         self.root.title("Algorithm Interface")
@@ -20,8 +20,7 @@ class interface:
         self.show_frame("Main menu")
 
     def show_frame(self, frame_name):
-        frame = self.frames_dict[frame_name]
-        self.current_frame = frame_name
+        frame = self.frames_dict[frame_name] 
         frame.tkraise()
 
     def create_intial_frame(self):
@@ -35,8 +34,11 @@ class interface:
         self.frames_dict[algorithm_name] = self.frame
 
         if algorithm_name == "Palindrome":
-
-            palindrome_frame(self.frame)
+            palindrome(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 150)
+        if algorithm_name == "Factorial":
+            factorial_frame(self.frame)
             Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
             Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 150)
         else:

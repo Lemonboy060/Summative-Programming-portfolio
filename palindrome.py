@@ -1,11 +1,11 @@
 from tkinter import *
 
-class palindrome_frame():
+class palindrome():
     def __init__(self, parent_frame):
         self.parent_frame = parent_frame
         Label(parent_frame, text = "Enter Palindrome: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=40)
         Label(self.parent_frame, text = f"Number of Palindrome Substring's:", bg = "light blue", font = (20), fg = "black").place(x=10, y=80)
-        self.entry = Entry(parent_frame, width=50)
+        self.entry = Entry(parent_frame, width=35)
         self.entry.place(x = 142, y = 42)
 
         Button(parent_frame, text="Count Pailndromes", font = (20), command=self.count_palindromes_substrings).place(x = 175, y = 150)
@@ -28,8 +28,6 @@ class palindrome_frame():
 
             if user_string[left] == user_string[right] and is_Palindrome(left+1, right-1):
                 memory[(left, right)] = True
-            elif user_string[left] != user_string[right] and is_Palindrome(left+1, right-1) == False:
-                memory[(left,right)] = False
             else:
                 memory[(left, right)] = False
             
@@ -42,5 +40,3 @@ class palindrome_frame():
                     p_count +=1 
 
         Label(self.parent_frame, text = p_count, bg = "light blue", font = (20), fg = "black").place(x=260, y=80)
-    
-        
