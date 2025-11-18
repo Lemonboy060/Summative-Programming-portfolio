@@ -1,6 +1,7 @@
 from tkinter import *
-from palindrome import palindrome
-from factorial import factorial_frame
+from palindrome_algorithm import palindrome
+from factorial_algorithm import factorial
+from fibonacci_algorithm import fibonacci
 
 
 class interface:
@@ -37,8 +38,12 @@ class interface:
             palindrome(self.frame)
             Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
             Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 150)
-        if algorithm_name == "Factorial":
-            factorial_frame(self.frame)
+        elif algorithm_name == "Factorial":
+            factorial(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 150)
+        elif algorithm_name == "Fibonacci":
+            fibonacci(self.frame)
             Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
             Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 150)
         else:

@@ -3,12 +3,12 @@ from tkinter import *
 class palindrome():
     def __init__(self, parent_frame):
         self.parent_frame = parent_frame
-        Label(parent_frame, text = "Enter Palindrome: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=40)
+        Label(self.parent_frame, text = "Enter Palindrome: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=40)
         Label(self.parent_frame, text = f"Number of Palindrome Substring's:", bg = "light blue", font = (20), fg = "black").place(x=10, y=80)
         self.entry = Entry(parent_frame, width=35)
         self.entry.place(x = 142, y = 42)
 
-        Button(parent_frame, text="Count Pailndromes", font = (20), command=self.count_palindromes_substrings).place(x = 175, y = 150)
+        Button(self.parent_frame, text="Count Pailndromes", font = (20), command=self.count_palindromes_substrings).place(x = 175, y = 150)
 
     def count_palindromes_substrings(self):
         user_string = self.entry.get()
@@ -18,15 +18,15 @@ class palindrome():
             if(left, right) in memory:
                 return memory[(left, right)]
             
-            if left == right:
+            elif left == right:
                 memory[(left, right)] = True
                 return True
             
-            if left + 1 == right:
+            elif left + 1 == right:
                 memory[(left, right)] = (user_string[left] == user_string[right])
                 return memory[(left, right)]
 
-            if user_string[left] == user_string[right] and is_Palindrome(left+1, right-1):
+            elif user_string[left] == user_string[right] and is_Palindrome(left+1, right-1):
                 memory[(left, right)] = True
             else:
                 memory[(left, right)] = False
