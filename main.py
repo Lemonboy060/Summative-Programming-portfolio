@@ -2,6 +2,7 @@ from tkinter import *
 from palindrome_algorithm import palindrome
 from factorial_algorithm import factorial
 from fibonacci_algorithm import fibonacci
+from randomised_algorithm import randomised
 
 
 class interface:
@@ -44,6 +45,10 @@ class interface:
             Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 150)
         elif algorithm_name == "Fibonacci":
             fibonacci(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 150)
+        elif algorithm_name == "Randomised":
+            randomised(self.frame)
             Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
             Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 150)
         else:
