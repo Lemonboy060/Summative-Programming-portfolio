@@ -12,6 +12,7 @@ class palindrome():
 
     def count_palindromes_substrings(self):
         user_string = self.entry.get()
+        palindrome_count = 0
         memory = {}
 
         def is_Palindrome(left, right):
@@ -33,10 +34,9 @@ class palindrome():
             
             return memory[(left, right)]
         
-        p_count = 0
         for letter in range(len(user_string)):
             for letter2 in range(letter, len(user_string)):
                 if is_Palindrome(letter, letter2):
-                    p_count +=1 
+                    palindrome_count +=1 
 
-        Label(self.parent_frame, text = p_count, bg = "light blue", font = (20), fg = "black").place(x=260, y=80)
+        Label(self.parent_frame, text = palindrome_count, bg = "light blue", font = (20), fg = "black").place(x=260, y=80)
