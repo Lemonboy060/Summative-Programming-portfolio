@@ -12,12 +12,7 @@ class fibonacci():
     
     def fibonacci_creator(self):
         nth_number = self.entry.get()
-        fibonacci_number_storage = [0, 1]
+        first_value, second_value = 0, 1
         for length in range(int(nth_number)-2):
-            next = fibonacci_number_storage[length-1] + fibonacci_number_storage[length-2]
-            fibonacci_number_storage.append(next)
-        i = 0
-        for element in fibonacci_number_storage:
-            fibonacci_number_storage[i] = int(fibonacci_number_storage[i])
-            i += 1
-        Label(self.parent_frame, text = fibonacci_number_storage[nth_number], bg = "light blue", font = (20), fg = "black").place(x=290, y= 80)
+            first_value, second_value = second_value, first_value + second_value
+        Label(self.parent_frame, text = second_value, bg = "light blue", font = (20), fg = "black").place(x=300, y= 80)
