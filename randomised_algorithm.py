@@ -1,9 +1,11 @@
 from tkinter import *
 from random import *
+from tkinter import messagebox
 
 class randomised():
     def __init__(self, parent_frame):
         self.parent_frame = parent_frame
+        self.deck_created = False
         self.deck_box = Text(self.parent_frame, width=65, height=5)
         self.deck_box.place(x = 10, y = 35)
         self.deck_box.config(state = "disabled")
@@ -23,9 +25,13 @@ class randomised():
                 self.deck.append(f" {card}{suit} ")
         for card in self.deck:
             self.deck_box.insert(END, card)
+        self.deck_created = True
         self.deck_box.config(state = "disabled")
     
     def shuffle_deck(self):
+        if self.deck_created == False:
+            messagebox.showerror("Error", "Please output deck before shuffling")
+            return
         self.deck_box.config(state = "normal")
         self.deck_box.delete("1.0", END)
 

@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 class fibonacci():
     def __init__(self, parent_frame):
@@ -12,6 +13,9 @@ class fibonacci():
     
     def fibonacci_creator(self):
         nth_number = self.entry.get()
+        if nth_number == "" or nth_number.isdigit() == False:
+            messagebox.showerror("Error", "Please input valid number")
+            return
         first_value, second_value = 0, 1
         for length in range(int(nth_number)-2):
             first_value, second_value = second_value, first_value + second_value
