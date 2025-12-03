@@ -31,18 +31,18 @@ class sorting():
             user_array.append(int(strings))
 
         if chosen_sort == "Bubble":
-            sorted_array = self.bubble_sort(chosen_order, user_array)
+            sorted_array = self.bubble_sort( user_array)
         elif chosen_sort == "Selection":
-            sorted_array = self.selection_order(chosen_order, user_array)
+            sorted_array = self.selection_order( user_array)
         else:
-            sorted_array = self.bubble_sort(chosen_order, user_array)
+            sorted_array = self.bubble_sort( user_array)
 
-    def bubble_sort(self, order_type, array):
+    def bubble_sort(self, array):
         for values in range(len(array)-1):
             for values_2 in range(len(array)-1):
                 if array[values_2+1] < array[values_2]:
                     array[values_2], array[values_2+1] = array[values_2+1], array[values_2]
-        print(array)
+        return array
 
-    def selection_order(self, order_type):
+    def selection_order(self, array):
         print()
