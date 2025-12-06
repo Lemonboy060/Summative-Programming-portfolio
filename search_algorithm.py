@@ -17,12 +17,13 @@ class search():
 
     def analyse_statistics(self):
         self.statistic_box.config(state = "normal")
+        self.statistic_box.delete("1.0", END)
         user_array = []
         user_array_inputs = self.entry.get()
         user_array_str = user_array_inputs.split(',')
 
         if user_array_inputs == "":
-            messagebox.showerror("Error", "Please enter a valid array of integers")
+            messagebox.showerror("Error", "Please input valid number")
             return
         
         for strings in user_array_str:
