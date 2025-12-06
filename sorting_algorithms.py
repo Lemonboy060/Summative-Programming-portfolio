@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from tkinter import ttk
 
 class sorting():
@@ -27,13 +28,17 @@ class sorting():
         user_array_inputs = self.entry.get()
         user_array_str = user_array_inputs.split(',')
 
+        if user_array_inputs == "":
+            messagebox.showerror("Error", "Please enter a valid array of integers")
+            return
+
         for strings in user_array_str:
             user_array.append(int(strings))
 
         if chosen_sort == "Bubble":
-            sorted_array = self.bubble_sort( user_array)
+            sorted_array = self.bubble_sort(user_array)
         elif chosen_sort == "Selection":
-            sorted_array = self.selection_order( user_array)
+            sorted_array = self.selection_order(user_array)
         else:
             sorted_array = self.bubble_sort( user_array)
 

@@ -5,6 +5,7 @@ from fibonacci_algorithm import fibonacci
 from randomised_algorithm import randomised
 from sorting_algorithms import sorting
 from search_algorithm import search
+from brute_force import merge
 
 
 class interface:
@@ -61,6 +62,10 @@ class interface:
             search(self.frame)
             Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
             Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        elif algorithm_name == "Brute force":
+            merge(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 150)
         else:
             Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
             Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 150)
