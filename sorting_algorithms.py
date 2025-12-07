@@ -23,7 +23,6 @@ class sorting():
 
     def sorting_function(self):
         user_array = []
-        chosen_order = self.sorting_order_dropbox.get()
         chosen_sort = self.sorting_type_dropbox.get()
         user_array_inputs = self.entry.get()
         user_array_str = user_array_inputs.split(',')
@@ -40,14 +39,37 @@ class sorting():
         elif chosen_sort == "Selection":
             sorted_array = self.selection_order(user_array)
         else:
-            sorted_array = self.bubble_sort( user_array)
+            sorted_array = self.bubble_sort(user_array)
+
+        if self.sorting_order_dropbox.get() == "Descending":
+            sorted_array = self.reverse_array(sorted_array)
+
+        Label(self.parent_frame, text = f"Sorted Array: {sorted_array}", bg = "light blue", font = (20), fg = "black").place(x=10, y = 100)
 
     def bubble_sort(self, array):
         for values in range(len(array)-1):
-            for values_2 in range(len(array)-1):
-                if array[values_2+1] < array[values_2]:
-                    array[values_2], array[values_2+1] = array[values_2+1], array[values_2]
+            for elements in range(len(array)-1):
+                if array[elements+1] < array[elements]:
+                    array[elements], array[elements+1] = array[elements+1], array[elements]
         return array
 
     def selection_order(self, array):
-        print()
+        values=1
+        for values in range(len(array)):
+            temp = array[values]
+            comparison_value = values-1
+
+            for elements in range(len(array)):
+                if comparison_value >= 0 and array[comparison_value] > temp:
+                    array[comparison_value+1] = array[comparison_value]
+                    comparison_value -= 1               
+            
+            array[comparison_value+1] = temp
+        return array
+    
+    def reverse_array(self, array):
+        for values in range(len(array)):
+            for elements in range(len(array)-1):
+                if array[elements+1] > array[elements]:
+                    array[elements], array[elements+1] = array[elements+1], array[elements]
+        return array
