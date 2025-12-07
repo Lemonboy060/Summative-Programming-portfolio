@@ -19,9 +19,9 @@ class sorting():
         self.sorting_type_dropbox.set("Select Sorting Algorithm:")
         self.sorting_type_dropbox.place(x=160, y=55)
 
-        Button(self.parent_frame, text ="Sort Values", font = (20), command=self.sorting_function).place(x = 175, y = 150)
+        Button(self.parent_frame, text ="Sort Values", font = (20), command=self.sorting_menu).place(x = 175, y = 150)
 
-    def sorting_function(self):
+    def sorting_menu(self):
         user_array = []
         chosen_sort = self.sorting_type_dropbox.get()
         user_array_inputs = self.entry.get()
