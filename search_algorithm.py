@@ -4,6 +4,19 @@ from sorting_algorithms import sorting
 
 class search():
     def __init__(self, parent_frame):
+        """
+        Creates all necessary widgets for the search class user interface
+
+        Creates Labels and entry boxes, to allow user to enter array
+        and creates text box for statictics of the array to be placed in
+
+        Args:
+        parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
+
+        Returns:
+        None 
+        """
+
         self.parent_frame = parent_frame
         Label(self.parent_frame, text = "Enter array of numbers to analyse, Seperated by commas: ", bg = "light blue", font = (20), fg = "black").place(x=10, y = 25)
         self.entry = Entry(parent_frame, width=40)
@@ -16,6 +29,21 @@ class search():
         Button(self.parent_frame, text = "Analyse Array", font = (20), command=self.analyse_statistics).place(x = 175, y = 165)
 
     def analyse_statistics(self):
+        """
+        Intially used to split user's input into a valid array of integers
+
+        Then used to call all relevant functions to find the smallest and largest
+        value, mode, median first IQF and third IQF
+
+        all relevant variables are then inserted into statistic_box text box
+
+        Args:
+        None
+
+        Returns:
+        None     
+        """
+
         self.statistic_box.config(state = "normal")
         self.statistic_box.delete("1.0", END)
         user_array = []
@@ -46,30 +74,40 @@ class search():
 
     def smallest_value(self, array):
         """
-        Docstring for smallest_value
+        Finds the smallest given value in an unordered array
         
-        :param self: Description
-        :param array: Description
+        Args:
+        array (list[int]): An unsorted array of user inputs
+
+        Returns:
+        smallest_value (int): lowest value in the array
         """
 
         smallest_value = array[0]
+
         for value in array:
             if value < smallest_value:
                 smallest_value = value
+
         return smallest_value
     
     def largest_value(self, array):
         """
-        Docstring for largest_value
+        Finds the largest given value in an unordered array
         
-        :param self: Description
-        :param array: Description
+        Args:
+        array (list[int]): An unsorted array of user inputs
+
+        Returns:
+        largest_value (int): Highest value in the array
         """
 
         largest_value = array[0]
+
         for value in array:
             if value > largest_value:
                 largest_value = value
+
         return largest_value
 
     def mode_of_array(self, array):
@@ -80,41 +118,56 @@ class search():
         array (list[int]): An unsorted array of user inputs
 
         Returns: 
-        mode (int): The most common value in the array
-        """
+        mode_list (list[int]): The most common value in the array
+            - If there is one frequent value, that one value will be returned in the list
+            - If there is multiple values with the same frequency, they will all be returned in the list
+            - If there is no frequent value, "No Mode" will be returned
 
+        """
         frequency_dictionary = {}
         most_freq = 0
-        mode = None
+        mode_list = []
+
         for value in array:
             if value not in frequency_dictionary:
                 frequency_dictionary[value] = 1
             else:
                 frequency_dictionary[value] += 1
+
         for value_freq in frequency_dictionary:
             if frequency_dictionary[value_freq] > most_freq:
                 most_freq = frequency_dictionary[value_freq]
-                mode = value_freq
-        return mode
+
+        if most_freq == 1:
+            return "No Mode"
+        
+        for element in frequency_dictionary:
+            if frequency_dictionary[element] == most_freq:
+                mode_list.append(element)
+
+        return mode_list
 
     def median_of_array(self, array):
         """
-        Finds the median of an unordered array, calls bubble sort
-        from the sorting class to order the array
+        Finds the median of an orginally unordered array, calls bubble sort
+        from the sorting class to order the array, as the median cannot
+        be found in a unordered array
         
         Args:
         array (list[int]): An unsorted array of user inputs
 
         Returns:
-        median (int): The centre of the orgianlly unordered array
+        median (int): The centre of the originally unordered array
         """
 
         sorted_array = sorting.bubble_sort(self, array)
         middle_of_array = (len(sorted_array) // 2)
+
         if len(sorted_array) % 2 == 0:
             median = (sorted_array[middle_of_array-1] + sorted_array[middle_of_array]) / 2
         else:
             median = sorted_array[middle_of_array]
+
         return median
 
     def IQF(self, array:list[int]) -> int: 
