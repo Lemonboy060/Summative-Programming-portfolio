@@ -45,6 +45,13 @@ class search():
         self.statistic_box.config(state = "disabled")
 
     def smallest_value(self, array):
+        """
+        Docstring for smallest_value
+        
+        :param self: Description
+        :param array: Description
+        """
+
         smallest_value = array[0]
         for value in array:
             if value < smallest_value:
@@ -52,6 +59,13 @@ class search():
         return smallest_value
     
     def largest_value(self, array):
+        """
+        Docstring for largest_value
+        
+        :param self: Description
+        :param array: Description
+        """
+
         largest_value = array[0]
         for value in array:
             if value > largest_value:
@@ -59,10 +73,21 @@ class search():
         return largest_value
 
     def mode_of_array(self, array):
+        """
+        Finds the mode of an unordered array
+
+        Args:
+        array (list[int]): An unsorted array of user inputs
+
+        Returns: 
+        mode (int): The most common value in the array
+        """
+
         frequency_dictionary = {}
         most_freq = 0
+        mode = None
         for value in array:
-            if value != frequency_dictionary:
+            if value not in frequency_dictionary:
                 frequency_dictionary[value] = 1
             else:
                 frequency_dictionary[value] += 1
@@ -73,6 +98,17 @@ class search():
         return mode
 
     def median_of_array(self, array):
+        """
+        Finds the median of an unordered array, calls bubble sort
+        from the sorting class to order the array
+        
+        Args:
+        array (list[int]): An unsorted array of user inputs
+
+        Returns:
+        median (int): The centre of the orgianlly unordered array
+        """
+
         sorted_array = sorting.bubble_sort(self, array)
         middle_of_array = (len(sorted_array) // 2)
         if len(sorted_array) % 2 == 0:
@@ -81,7 +117,19 @@ class search():
             median = sorted_array[middle_of_array]
         return median
 
-    def IQF(self, array):
+    def IQF(self, array:list[int]) -> int: 
+        """
+        IQF (Interquartile function), finds the first and thrid quartile
+        of an unordered array
+        
+        Args:
+        array (list[int]): An unsorted array of user inputs
+
+        Returns:
+        IQF1 (int): The median of the lower half of the originally unordered array
+        IQF3 (int): The median of the upper half of the originally unordered array
+        """
+
         sorted_array = sorting.bubble_sort(self, array)
         middle_of_array = (len(sorted_array) // 2)
 
