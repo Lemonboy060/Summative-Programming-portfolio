@@ -3,6 +3,18 @@ from tkinter import messagebox
 
 class fibonacci():
     def __init__(self, parent_frame):
+        """
+        Creates all necessary widgets for the fibonacci class user interface
+
+        Creates Labels and Entry boxes, to allow user to enter a integer 
+        Also a button to call the fobpnacci_creator function
+
+        Args:
+        parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
+
+        Returns:
+        None 
+        """
         self.parent_frame = parent_frame
         Label(self.parent_frame, text = "Enter number:", bg = "light blue", font = (20), fg = "black").place(x=10, y=40)
         Label(self.parent_frame, text = f"Number at Nth in Fibonacci's sequence:", bg = "light blue", font = (20), fg = "black").place(x=10, y=80)
@@ -12,6 +24,21 @@ class fibonacci():
         Button(self.parent_frame, text="Find Nth Number", font = (20), command=self.fibonacci_creator).place(x = 175, y = 150)
     
     def fibonacci_creator(self):
+        """
+        First gets the number the user entered and checks if its a valid input
+
+        Assigns first_value and second_value as 0 and 1, as they are always
+        the first two values in the fibonacci sequence
+        
+        Then will repeatedly reassign the first value as second value, and then
+        reassign the second value as the sum of both, until it reaches then inputted number
+
+        Args:
+        None
+
+        Returns:
+        None
+        """
         nth_number = self.entry.get()
         if nth_number == "" or nth_number.isdigit() == False:
             messagebox.showerror("Error", "Please input valid number")
