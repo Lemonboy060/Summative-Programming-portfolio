@@ -1,6 +1,11 @@
 from tkinter import *
 from tkinter import messagebox
 from sorting_algorithms import sorting
+"""
+sorting class is imported in so the bubble sort algorithm 
+can be used to sort an array to help find the median as it 
+can only be found, once an array is sorted
+"""
 
 class search():
     def __init__(self, parent_frame):
@@ -32,8 +37,10 @@ class search():
         """
         Intially used to split user's input into a valid array of integers
 
+        Checks each of those values to ensure they are valid 
+
         Then used to call all relevant functions to find the smallest and largest
-        value, mode, median first IQF and third IQF
+        values, mode, median first IQF and third IQF of the array
 
         all relevant variables are then inserted into statistic_box text box
 

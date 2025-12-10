@@ -7,7 +7,7 @@ class fibonacci():
         Creates all necessary widgets for the fibonacci class user interface
 
         Creates Labels and Entry boxes, to allow user to enter a integer 
-        Also a button to call the fobpnacci_creator function
+        Also a button to call the fibpnacci_creator function
 
         Args:
         parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
@@ -25,7 +25,7 @@ class fibonacci():
     
     def fibonacci_creator(self):
         """
-        First gets the number the user entered and checks if its a valid input
+        Gets the number the user entered and checks if its a valid input
 
         Assigns first_value and second_value as 0 and 1, as they are always
         the first two values in the fibonacci sequence
