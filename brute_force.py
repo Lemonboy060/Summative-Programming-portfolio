@@ -16,7 +16,7 @@ class merge():
         self.sorting_order_dropbox.set("Select Order:")
         self.sorting_order_dropbox.place(x=10, y=55)
 
-        Button(self.parent_frame, text ="Sort Values", font = (20)).place(x = 175, y = 165)
+        Button(self.parent_frame, text ="Sort Values", font = (20), command=self.sorting_menu).place(x = 175, y = 165)
 
     def sorting_menu(self):
         user_array = []
@@ -36,8 +36,64 @@ class merge():
             sorted_array = sorting.reverse_array(self, sorted_array)
         
         Label(self.parent_frame, text = f"Sorted Array: {sorted_array}", bg = "light blue", font = (20), fg = "black").place(x=10, y = 100)
+    
+    def merge(self, array, left_array, right_array):
+        left_array_length = len(left_array)
+        right_array_length = len(right_array)
+        i_index = 0
+        L_index = 0 
+        r_index = 0
+
+        while L_index < left_array_length and r_index < right_array_length:
+            if left_array[L_index] < right_array[r_index]:
+                array[i_index] = left_array[L_index]
+                i_index += 1
+                L_index += 1
+            else:
+                array[i_index] = right_array[r_index]
+                i_index += 1
+                r_index += 1
+
+        while(L_index < left_array_length):
+            array[i_index] = left_array[L_index]
+            i_index += 1
+            L_index += 1
+
+        while(r_index < right_array_length):
+            array[i_index] = right_array[r_index]
+            i_index += 1
+            r_index += 1
+
+        return array
 
     def merge_sort(self, array):
-        pass
+
+        array_length = len(array)
+        middle_of_array = array_length // 2
+
+        if array_length <= 1:
+            return array
+
+        left_array = array[:middle_of_array]
+        right_array = array[middle_of_array:]
+
+        i_index = 0
+        j_index = 0
+
+        for i_index in range(i_index + 1, i_index < array_length):
+            if i_index < middle_of_array:
+                left_array[i_index] = array[i_index]
+            else:
+                right_array[i_index] = array[i_index]
+                j_index += 1
+        
+        left_array = self.merge_sort(left_array)
+        right_array = self.merge_sort(right_array)
+        array = self.merge(array, left_array, right_array)
+        return array
+        
+        
+        
+
 
     
