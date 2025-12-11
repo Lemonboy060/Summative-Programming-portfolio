@@ -102,13 +102,15 @@ class sorting():
         """
         Sorts the users array of integers using selection sort
 
-        Repeatedly loops through the array, 
+        Repeatedly loops through the array, looking for the smallest value
+        in the unsorted part of the array iteration, then swapping it with
+        the first value of the unsorte part of the array
 
         Args:
-        array (list[int]): The users orginally unnsorted array of numbers
+        array (list[int]): The users originally unsorted array of numbers
 
         Returns:
-        array (list[int]): The users orginally unnsorted array of numbers, now sorted
+        array (list[int]): The users originally unsorted array of numbers, now sorted
         """
 
         for i_index in range(len(array)):
@@ -123,10 +125,17 @@ class sorting():
     
     def reverse_array(self, array):
         """
-        Docstring for reverse_array
-        
-        :param self: Description
-        :param array: Description
+        Reverses the array, essentially putting the array in descending order
+
+        Uses a reversed bubble sort, Repeatedly loops through the array, 
+        comparing adjacent numbers swapping them if the number ahead of the 
+        first number is larger
+
+        Args:
+        array (list[int]): Ordered array in acending order
+
+        Returns:
+        array (list[int]): A order array in descending order
         """
 
         for values in range(len(array)):
