@@ -31,7 +31,7 @@ class sorting():
         self.sorting_type_dropbox.set("Select Sorting Algorithm:")
         self.sorting_type_dropbox.place(x=160, y=55)
 
-        Button(self.parent_frame, text ="Sort Values", font = (20), command=self.sorting_menu).place(x = 175, y = 150)
+        Button(self.parent_frame, text ="Sort Values", font = (20), command=self.sorting_menu).place(x = 175, y = 165)
 
     def sorting_menu(self):
         """

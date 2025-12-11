@@ -10,8 +10,8 @@ class randomised():
         self.deck_box.place(x = 10, y = 35)
         self.deck_box.config(state = "disabled")
 
-        Button(self.parent_frame, text ="Output Cards", font = (20), command=self.create_deck).place(x = 175, y = 150)
-        Button(self.parent_frame, text="Shuffle Cards", font = (20), command=self.shuffle_deck).place(x = 295, y = 150)
+        Button(self.parent_frame, text ="Output Cards", font = (20), command=self.create_deck).place(x = 175, y = 165)
+        Button(self.parent_frame, text="Shuffle Cards", font = (20), command=self.shuffle_deck).place(x = 295, y = 165)
     
     def create_deck(self):
         self.deck_box.config(state = "normal")

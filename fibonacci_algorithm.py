@@ -21,7 +21,7 @@ class fibonacci():
         self.entry = Entry(parent_frame, width=35)
         self.entry.place(x = 142, y = 42)
 
-        Button(self.parent_frame, text="Find Nth Number", font = (20), command=self.fibonacci_creator).place(x = 175, y = 150)
+        Button(self.parent_frame, text="Find Nth Number", font = (20), command=self.fibonacci_creator).place(x = 175, y = 165)
     
     def fibonacci_creator(self):
         """

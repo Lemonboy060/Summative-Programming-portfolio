@@ -21,7 +21,7 @@ class factorial():
         self.entry = Entry(parent_frame, width=35)
         self.entry.place(x = 122, y = 42)
     
-        Button(self.parent_frame, text="Find Factorial", font = (20), command=self.recursive_factorial).place(x = 175, y = 150)
+        Button(self.parent_frame, text="Find Factorial", font = (20), command=self.recursive_factorial).place(x = 175, y = 165)
 
     def recursive_factorial(self):
         """

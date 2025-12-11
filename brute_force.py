@@ -16,7 +16,7 @@ class merge():
         self.sorting_order_dropbox.set("Select Order:")
         self.sorting_order_dropbox.place(x=10, y=55)
 
-        Button(self.parent_frame, text ="Sort Values", font = (20)).place(x = 175, y = 150)
+        Button(self.parent_frame, text ="Sort Values", font = (20)).place(x = 175, y = 165)
 
     def sorting_menu(self):
         user_array = []
