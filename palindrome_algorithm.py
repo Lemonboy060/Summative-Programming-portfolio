@@ -25,7 +25,8 @@ class palindrome():
 
     def count_palindromes_substrings(self):
         """
-        Counts the palindrome substrings in the string entered by the user
+        Counts the palindrome substrings in the string entered by the user by 
+        calling is_palindrome function to check if parts of the string are palindromes 
         and displays the result in the the user inteface 
 
         Args:
@@ -39,22 +40,26 @@ class palindrome():
         palindrome_count = 0
         self.memory = {}
 
-        for letter in range(len(self.user_string)):
-            for letter2 in range(letter, len(self.user_string)):
-                if self.is_Palindrome(letter, letter2):
+        for i_index in range(len(self.user_string)):
+            for j_index in range(i_index, len(self.user_string)):
+                if self.is_Palindrome(i_index, j_index):
                     palindrome_count +=1 
 
         Label(self.parent_frame, text = palindrome_count, bg = "light blue", font = (20), fg = "black").place(x=260, y=80)
 
     def is_Palindrome(self, left, right):
             """
-            Docstring for is_Palindrome
+            Checks whether a certain part of the string entered by the user is a palindrome
+
+            Uses memorisation in memory dictionary to ensure each substring is checked once 
+            and not numerous times
             
             Args:
-            left (int):
-            right (int): 
+            left (int): First index of the substring
+            right (int): Last index of the substring
 
             Return:
+            self.memory[(left, right)] (bool): 
 
             """
             if(left, right) in self.memory:

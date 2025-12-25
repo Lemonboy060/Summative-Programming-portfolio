@@ -5,6 +5,19 @@ from sorting_algorithms import sorting
 
 class merge():
     def __init__(self, parent_frame):
+        """
+        Creates all necessary widgets for the merge class user interface
+
+        Creates Labels and entry boxes, to allow user to enter array of elements
+        to be sorted with merge sort
+
+        Args:
+        parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
+
+        Returns:
+        None 
+        """
+
         self.parent_frame = parent_frame
         Label(self.parent_frame, text = "Enter array of numbers to sort, Seperated by commas: ", bg = "light blue", font = (20), fg = "black").place(x=10, y = 25)
         self.entry = Entry(parent_frame, width=40)
@@ -19,6 +32,21 @@ class merge():
         Button(self.parent_frame, text ="Sort Values", font = (20), command=self.sorting_menu).place(x = 175, y = 165)
 
     def sorting_menu(self):
+        """
+        Intially used to split user's input into a valid array of integers
+
+        Checks each of those values to ensure they are valid 
+
+        Then calls merge_sort to sort array, and will then call reverse_array from
+        the sorting_algorithms file to flip the array using a reverse bubble sort
+        if the user selected for the array order to be descending
+        
+        Args:
+        None
+
+        Returns:
+        None
+        """
         user_array = []
         user_array_inputs = self.entry.get()
         user_array_str = user_array_inputs.split(',')
@@ -38,6 +66,14 @@ class merge():
         Label(self.parent_frame, text = f"Sorted Array: {sorted_array}", bg = "light blue", font = (20), fg = "black").place(x=10, y = 100)
     
     def merge(self, array, left_array, right_array):
+        """
+        Docstring for merge
+        
+        :param self: Description
+        :param array: Description
+        :param left_array: Description
+        :param right_array: Description
+        """
         left_array_length = len(left_array)
         right_array_length = len(right_array)
         i_index = 0
@@ -67,6 +103,12 @@ class merge():
         return array
 
     def merge_sort(self, array):
+        """
+        Docstring for merge_sort
+        
+        :param self: Description
+        :param array: Description
+        """
 
         array_length = len(array)
         middle_of_array = array_length // 2
