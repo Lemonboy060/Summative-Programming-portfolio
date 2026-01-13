@@ -11,9 +11,6 @@ class sorting():
 
         Args:
         parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
-
-        Returns:
-        None 
         """
 
         self.parent_frame = parent_frame
@@ -45,13 +42,7 @@ class sorting():
         If the user had chose for the sorted array to be displayed in descending
         order, reverse_array will be called
 
-        New sorted array is displayed in a new Label
-
-        Args:
-        None
-
-        Returns:
-        None   
+        New sorted array is displayed in a new Label 
         """
 
         user_array = []
@@ -89,7 +80,7 @@ class sorting():
         array (list[int]): The users orginally unnsorted array of numbers
 
         Returns:
-        array (list[int]): The users orginally unnsorted array of numbers, now sorted
+        array (list[int]): The users orginally unnsorted array of numbers, now sorted using bubble sort
         """
 
         for values in range(len(array)-1):
@@ -110,7 +101,7 @@ class sorting():
         array (list[int]): The users originally unsorted array of numbers
 
         Returns:
-        array (list[int]): The users originally unsorted array of numbers, now sorted
+        array (list[int]): The users originally unsorted array of numbers, now sorted using selection sort
         """
 
         for i_index in range(len(array)):

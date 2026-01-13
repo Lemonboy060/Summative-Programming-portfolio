@@ -13,9 +13,6 @@ class merge():
 
         Args:
         parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
-
-        Returns:
-        None 
         """
 
         self.parent_frame = parent_frame
@@ -41,11 +38,6 @@ class merge():
         the sorting_algorithms file to flip the array using a reverse bubble sort
         if the user selected for the array order to be descending
         
-        Args:
-        None
-
-        Returns:
-        None
         """
         user_array = []
         user_array_inputs = self.entry.get()

@@ -1,11 +1,17 @@
 from tkinter import *
-from Algorithm_factory_pattern import Algorithm_factory
+from palindrome_algorithm import palindrome
+from factorial_algorithm import factorial
+from fibonacci_algorithm import fibonacci
+from randomised_algorithm import randomised
+from sorting_algorithms import sorting
+from search_algorithm import search
+from brute_force import merge
+from RSA_algorithm import RSA
 
 
 class interface:
     def __init__(self, root):
         self.root = root
-        self.factory = Algorithm_factory()
         self.all_algo = ["Search","Sorting","RSA","Factorial","Randomised","Brute force","Fibonacci","Palindrome"]
         self.frames_dict = {}
 
@@ -16,7 +22,7 @@ class interface:
         for algos in self.all_algo:
             self.create_all_frames(algos)
 
-        self.create_widgets()
+        self.create_button_widgets()
         self.show_frame("Main menu")
 
     def show_frame(self, frame_name):
@@ -33,15 +39,53 @@ class interface:
         self.frame.grid(row=0, column=0, sticky="nsew")
         self.frames_dict[algorithm_name] = self.frame
 
-        self.factory.call_frame(algorithm_name, self.frame)
-        
-        Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
-        Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        if algorithm_name == "Palindrome":
+            palindrome(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        elif algorithm_name == "Factorial":
+            factorial(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        elif algorithm_name == "Fibonacci":
+            fibonacci(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        elif algorithm_name == "Randomised":
+            randomised(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        elif algorithm_name == "Sorting":
+            sorting(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        elif algorithm_name == "Search":
+            search(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        elif algorithm_name == "Brute force":
+            merge(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        elif algorithm_name == "RSA":
+            RSA(self.frame)
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        else:
+            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+
     
-    def create_widgets(self, y_pos = 50):
+    def create_button_widgets(self):
+        """
+        Creates all the button widgets for the mainmenu frame, allowing the user to traverese to
+        different frames/classes
+        """
+        y_pos = 50
+
         Label(self.main_menu_frame, text = "Main menu - Select Algorithm", font = (20), bg = "light blue", fg = "black").place(x = 10)
         for algorithm in self.all_algo:
-            Button(self.main_menu_frame, text = f"{algorithm} Algorithm", font = (20), command=lambda a=algorithm: self.show_frame(a)).place(x = 10, y = y_pos)
+            Button(self.main_menu_frame, text = f"{algorithm} Algorithm", font = (20), command=lambda: self.show_frame(algorithm)).place(x = 10, y = y_pos)
             y_pos += 50
 
 if __name__ == "__main__":

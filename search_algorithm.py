@@ -17,9 +17,6 @@ class search():
 
         Args:
         parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
-
-        Returns:
-        None 
         """
 
         self.parent_frame = parent_frame
@@ -42,13 +39,7 @@ class search():
         Then used to call all relevant functions to find the smallest and largest
         values, mode, median first IQF and third IQF of the array
 
-        all relevant variables are then inserted into statistic_box text box
-
-        Args:
-        None
-
-        Returns:
-        None     
+        all relevant variables are then inserted into statistic_box text box 
         """
 
         self.statistic_box.config(state = "normal")
@@ -129,8 +120,8 @@ class search():
             - If there is one frequent value, that one value will be returned in the list
             - If there is multiple values with the same frequency, they will all be returned in the list
             - If there is no frequent value, "No Mode" will be returned
-
         """
+        
         frequency_dictionary = {}
         most_freq = 0
         mode_list = []

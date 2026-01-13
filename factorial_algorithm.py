@@ -11,10 +11,8 @@ class factorial():
 
         Args:
         parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
-
-        Returns:
-        None 
         """
+
         self.parent_frame = parent_frame 
         Label(self.parent_frame, text = "Enter Number: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=40)
         Label(self.parent_frame, text = f"Number's Factorial:", bg = "light blue", font = (20), fg = "black").place(x=10, y=80)
@@ -29,17 +27,13 @@ class factorial():
 
         The integer is then checked if its a valid input, using .isdigit
         As it checks if the value is positive and a integer
-            - If the input is not valid, a error message will pop up
+        
+        If the input is not valid, a error message will pop up
 
         calc_factorial is then called and assigned to total, which will
         then be displayed in a Label
-
-        Args:
-        None 
-
-        Returns:
-        None 
         """
+
         text_box_entry = self.entry.get() 
         if text_box_entry.isdigit() == False: 
             messagebox.showerror("Error", "Please enter a valid whole number.")

@@ -10,9 +10,6 @@ class palindrome():
 
         Args:
         parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
-
-        Returns:
-        None 
         """
 
         self.parent_frame = parent_frame
@@ -28,12 +25,6 @@ class palindrome():
         Counts the palindrome substrings in the string entered by the user by 
         calling is_palindrome function to check if parts of the string are palindromes 
         and displays the result in the the user inteface 
-
-        Args:
-        None
-
-        Returns:
-        None
         """
 
         self.user_string = self.entry.get()
@@ -60,8 +51,8 @@ class palindrome():
 
             Return:
             self.memory[(left, right)] (bool): 
-
             """
+            
             if(left, right) in self.memory:
                 return self.memory[(left, right)]
             
