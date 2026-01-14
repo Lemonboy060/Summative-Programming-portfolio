@@ -21,11 +21,16 @@ class RSA():
         Button(self.parent_frame, text="Decrypt", font = (20)).place(x = 260, y = 195)
 
     def rsa_menu(self):
+        plaintext = self.entry.get()
         pub_key = self.entry_public_key.get()
         pri_key = self.entry_private_key.get()
 
+        if plaintext == "":
+            messagebox.showerror("Error", "Please enter plaintext")
+
         if pub_key == "" and pri_key == "":
             pub_key, pri_key, prime_product = self.generate_keys()
+            self.encrpyt(plaintext, pub_key, pri_key, prime_product)
         else:
             messagebox.showerror("Error", "Please enter values for both keys or none to generate keys")
         
@@ -101,10 +106,19 @@ class RSA():
         return True
         
         
+    def divide_string(self, word):
+        word_array = []
+        ascii_array = []
+        for letter in word:
+            word_array.append(letter)
 
+        for letter in word_array:
+            ascii_array.append(ord(letter))
 
+        return ascii_array
+        
     
-    def encrpyt(self, public, private):
+    def encrpyt(self,plaintext,public, private, product):
         """
         Used public key to encrypt the message 
         
@@ -115,6 +129,13 @@ class RSA():
 
         message^B mod N = cipher
         """
+        encrypted_array = []
+        plaintext_ascii = self.divide_string(plaintext)
+        for value in plaintext_ascii:
+            encrypted_array.append(pow(value, private, product))
+        
+        print(encrypted_array)
+
     
     def decrypt(self, public, private):
         """
