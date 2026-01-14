@@ -1,4 +1,6 @@
 from tkinter import *
+from tkinter import messagebox
+import random
 
 class RSA():
     def __init__(self, parent_frame):     
@@ -22,7 +24,12 @@ class RSA():
         pub_key = self.entry_public_key.get()
         pri_key = self.entry_private_key.get()
 
-        print(pub_key, pri_key)
+        if pub_key == "" and pri_key == "":
+            pub_key, pri_key, prime_product = self.generate_keys()
+        else:
+            messagebox.showerror("Error", "Please enter values for both keys or none to generate keys")
+        
+
     
     def generate_keys(self):
         """
@@ -44,8 +51,60 @@ class RSA():
             so (B x I) mod T = 1    
         :param self: Description
         """
+        min_prime = 101
+        max_prime = 10007
+
+        valid_prime1 = False
+        valid_prime2 = False
+        while valid_prime1 == False:
+            prime1 = random.randint(min_prime, max_prime)
+            valid_prime1 = self.is_prime(prime1)
+
+        while valid_prime2 == False:
+            prime2 = random.randint(min_prime, max_prime)
+            valid_prime2 = self.is_prime(prime2)
+
+        prime_product = prime1*prime2
+        prime_totient = (prime1-1) * (prime2-1)
+              
+        valid_public_key = False
+        while valid_public_key == False:
+            public_key = random.randint(min_prime, max_prime)
+            valid_public_key = self.check_public_key(prime_totient, public_key)
+
+        private_key = pow(public_key, -1, prime_totient)
+        
+        # if valid_public_key == True:
+        #     print(f"Prime 1: {prime1}")
+        #     print(f"Prime 2: {prime2}")    
+        #     print(f"Totient: {prime_totient}")
+        #     print(f"Public key: {public_key}")
+        #     print(f"Private key: {private_key}")
+
+        return public_key, private_key, prime_product
     
-    def encrpyt(self):
+
+    def is_prime(self, num_check):
+        for i_index in range(2, num_check):
+            if num_check % i_index == 0:
+                return False
+        return True
+    
+    def check_public_key(self, totient, public_key):
+        factor_totient = totient % public_key
+        if public_key > totient:
+            return False
+        if self.is_prime(public_key) == False:
+            return False
+        if factor_totient == 0:
+            return False
+        return True
+        
+        
+
+
+    
+    def encrpyt(self, public, private):
         """
         Used public key to encrypt the message 
         
@@ -57,7 +116,7 @@ class RSA():
         message^B mod N = cipher
         """
     
-    def decrypt(self):
+    def decrypt(self, public, private):
         """
         uses private key to decrpyt the message
 
