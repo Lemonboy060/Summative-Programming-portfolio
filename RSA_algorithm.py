@@ -18,8 +18,14 @@ class RSA():
         Label(self.parent_frame, text = "Encrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=160)
         Label(self.parent_frame, text = "Decrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=200)
 
-        Button(self.parent_frame, text="Encrypt", font = (20), command=self.encrpyt).place(x = 175, y = 255)
-        Button(self.parent_frame, text="Decrypt", font = (20), command=self.decrypt).place(x = 260, y = 255)
+        self.encrypt_button = Button(self.parent_frame, text="Encrypt", font = (20), command=self.encrpyt)
+        self.encrypt_button.place(x = 175, y = 255)
+        self.decrypt_button = Button(self.parent_frame, text="Decrypt", font = (20), command=self.decrypt)
+        self.decrypt_button.place(x = 260, y = 255)
+
+        self.encrypt_button["state"] = "disabled"
+        self.decrypt_button["state"] = "disabled"
+
         Button(self.parent_frame, text="Generate keys", font = (20), command=self.rsa_menu).place(x = 340, y = 255)
 
     def rsa_menu(self):
@@ -34,6 +40,9 @@ class RSA():
             self.pub_key, self.pri_key, self.prime_product = self.generate_keys()
         else:
             messagebox.showerror("Error", "Please enter values for both keys or none to generate keys")
+        
+        self.encrypt_button["state"] = "normal"
+        self.decrypt_button["state"] = "normal"
         
 
     
