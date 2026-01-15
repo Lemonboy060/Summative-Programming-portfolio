@@ -15,22 +15,23 @@ class RSA():
         self.entry_private_key = Entry(parent_frame, width=35)
         self.entry_private_key.place(x = 202, y = 122)
 
-        Label(self.parent_frame, text = "Outputted Text: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=160)
+        Label(self.parent_frame, text = "Encrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=160)
+        Label(self.parent_frame, text = "Decrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=200)
 
-        Button(self.parent_frame, text="Encrypt", font = (20), command=self.rsa_menu).place(x = 175, y = 195)
-        Button(self.parent_frame, text="Decrypt", font = (20)).place(x = 260, y = 195)
+        Button(self.parent_frame, text="Encrypt", font = (20), command=self.encrpyt).place(x = 175, y = 255)
+        Button(self.parent_frame, text="Decrypt", font = (20), command=self.decrypt).place(x = 260, y = 255)
+        Button(self.parent_frame, text="Generate keys", font = (20), command=self.rsa_menu).place(x = 340, y = 255)
 
     def rsa_menu(self):
-        plaintext = self.entry.get()
-        pub_key = self.entry_public_key.get()
-        pri_key = self.entry_private_key.get()
+        self.plaintext = self.entry.get()
+        self.pub_key = self.entry_public_key.get()
+        self.pri_key = self.entry_private_key.get()
 
-        if plaintext == "":
+        if self.plaintext == "":
             messagebox.showerror("Error", "Please enter plaintext")
 
-        if pub_key == "" and pri_key == "":
-            pub_key, pri_key, prime_product = self.generate_keys()
-            self.encrpyt(plaintext, pub_key, pri_key, prime_product)
+        if self.pub_key == "" and self.pri_key == "":
+            self.pub_key, self.pri_key, self.prime_product = self.generate_keys()
         else:
             messagebox.showerror("Error", "Please enter values for both keys or none to generate keys")
         
@@ -118,7 +119,7 @@ class RSA():
         return ascii_array
         
     
-    def encrpyt(self,plaintext,public, private, product):
+    def encrpyt(self):
         """
         Used public key to encrypt the message 
         
@@ -129,15 +130,23 @@ class RSA():
 
         message^B mod N = cipher
         """
-        encrypted_array = []
-        plaintext_ascii = self.divide_string(plaintext)
+
+
+        self.encrypted_array = []
+        plaintext_ascii = self.divide_string(self.plaintext)
+
         for value in plaintext_ascii:
-            encrypted_array.append(pow(value, private, product))
+            self.encrypted_array.append(pow(value, self.pri_key, self.prime_product))
+
+        encypted_plaintext = "".join(str(str_value) for str_value in self.encrypted_array)
+
+        encryption = Label(self.parent_frame, text = f"{encypted_plaintext}", bg = "Light Blue", font = (20), fg = "black")
+        encryption.place(x=140, y=160)
         
-        print(encrypted_array)
+
 
     
-    def decrypt(self, public, private):
+    def decrypt(self):
         """
         uses private key to decrpyt the message
 
@@ -148,3 +157,24 @@ class RSA():
         
         Cipher^I mod N = message
         """
+
+
+        self.decypted_ascii_values = []
+        self.decypted_values = []
+
+        for value in self.encrypted_array:
+            self.decypted_ascii_values.append(pow(value, self.pub_key, self.prime_product))
+        
+        for value in self.decypted_ascii_values:
+            self.decypted_values.append(chr(value))
+
+        original_plaintext = ", ".join(self.decypted_values)
+
+        original = Label(self.parent_frame, text = f"{original_plaintext}", bg = "Light Blue", font = (20), fg = "black")
+        original.place(x=140, y=200)
+
+
+        
+        
+        
+
