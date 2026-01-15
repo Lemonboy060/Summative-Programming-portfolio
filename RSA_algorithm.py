@@ -35,11 +35,16 @@ class RSA():
 
         if self.plaintext == "":
             messagebox.showerror("Error", "Please enter plaintext")
+            return
 
         if self.pub_key == "" and self.pri_key == "":
             self.pub_key, self.pri_key, self.prime_product = self.generate_keys()
+        elif len(self.pub_key) > 0 and len(self.pri_key) > 0:
+            messagebox.showerror("Error", "Please enter valid key")
+            return
         else:
             messagebox.showerror("Error", "Please enter values for both keys or none to generate keys")
+            return 
         
         self.encrypt_button["state"] = "normal"
         self.decrypt_button["state"] = "normal"
@@ -139,8 +144,6 @@ class RSA():
 
         message^B mod N = cipher
         """
-
-
         self.encrypted_array = []
         plaintext_ascii = self.divide_string(self.plaintext)
 
@@ -151,9 +154,8 @@ class RSA():
 
         encryption = Label(self.parent_frame, text = f"{encypted_plaintext}", bg = "Light Blue", font = (20), fg = "black")
         encryption.place(x=140, y=160)
-        
 
-
+        self.encrypt_button["state"] = "disabled"
     
     def decrypt(self):
         """
@@ -166,8 +168,6 @@ class RSA():
         
         Cipher^I mod N = message
         """
-
-
         self.decypted_ascii_values = []
         self.decypted_values = []
 
@@ -182,8 +182,4 @@ class RSA():
         original = Label(self.parent_frame, text = f"{original_plaintext}", bg = "Light Blue", font = (20), fg = "black")
         original.place(x=140, y=200)
 
-
-        
-        
-        
-
+        self.decrypt_button["state"] = "disabled"
