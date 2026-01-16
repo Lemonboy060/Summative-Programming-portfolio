@@ -58,6 +58,10 @@ class RSA():
         self.pri_key = self.entry_private_key.get()
         self.mod = self.entry_modulus.get()
 
+        if self.pub_key.isdigit() == False or self.pri_key.isdigit() == False or self.mod.isdigit() == False:
+            messagebox.showerror("Error", "Please ensure both keys and modulus are valid integers")
+            return
+
         if self.plaintext == "":
             messagebox.showerror("Error", "Please enter plaintext")
             return
@@ -86,7 +90,8 @@ class RSA():
         else:
             self.valid_keys = False
             messagebox.showerror("Error", "Keys and modulus entered are invalid")
-
+            self.encrypt_button["state"] = "disabled"
+            self.decrypt_button["state"] = "disabled"
 
     
     def generate_keys(self):
@@ -94,20 +99,25 @@ class RSA():
         Used to generate both the public and private keys for enrypting and decrypting
         user strings
 
-        To genertate keys
+        To genertate keys:
             - Select two prime number, P1 and P2
             - Calculate the product of thsoe primes N = p1 x p2
             - Calculate the Totient of those primes T = (p1-1) x (p2-1)
         
-        Then to select public key (B), select a random number
+        Then to select public key (B), select a random number:
             - Number must be prime
             - be less then the totient B < T
             - must not be a factor of the totient, T mod B != 0
 
-        Then to select private key (I), select random number
+        Then to select private key (I), select random number:
             - Product of I (private) and B (public) divided by the totient must have a remainder of 1
             so (B x I) mod T = 1    
-        :param self: Description
+        
+            
+        Returns:
+        public_key
+        private_key
+        prime_product
         """
         min_prime = 101
         max_prime = 10007
@@ -131,14 +141,6 @@ class RSA():
             valid_public_key = self.check_public_key(prime_totient, public_key)
 
         private_key = pow(public_key, -1, prime_totient)
-        
-        # if valid_public_key == True:
-        #     print(f"Prime 1: {prime1}")
-        #     print(f"Prime 2: {prime2}")    
-        #     print(f"Totient: {prime_totient}")
-        #     print(f"Public key: {public_key}")
-        #     print(f"Private key: {private_key}")
-
         return public_key, private_key, prime_product
     
 
@@ -186,7 +188,7 @@ class RSA():
         plaintext_ascii = self.divide_string(self.plaintext)
 
         for value in plaintext_ascii:
-            self.encrypted_array.append(pow(value, self.pri_key, self.prime_product))
+            self.encrypted_array.append(self.power_value(value, self.pri_key, self.prime_product))
 
         encypted_plaintext = "".join(str(str_value) for str_value in self.encrypted_array)
 
@@ -210,15 +212,28 @@ class RSA():
         self.decypted_values = []
 
         for value in self.encrypted_array:
-            self.decypted_ascii_values.append(pow(value, self.pub_key, self.prime_product))
+            self.decypted_ascii_values.append(self.power_value(value, self.pub_key, self.prime_product))
         
         for value in self.decypted_ascii_values:
             self.decypted_values.append(chr(value))
 
-        original_plaintext = ", ".join(self.decypted_values)
+        original_plaintext = "".join(self.decypted_values)
 
         original = Label(self.parent_frame, text = f"{original_plaintext}", bg = "Light Blue", font = (20), fg = "black")
         original.place(x=140, y=240)
 
         self.decrypt_button["state"] = "disabled"
         self.gen_button["state"] = "normal"
+
+    def power_value(self, value, key, modulus):
+        power_value = 1
+        for values in range(key):
+            if key & 1:
+                power_value = (power_value * value)
+                power_value = power_value % modulus
+            key = key // 2
+            value = (value * value)
+            value = value % modulus
+        return power_value
+
+
