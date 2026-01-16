@@ -3,7 +3,16 @@ from tkinter import messagebox
 import random
 
 class RSA():
-    def __init__(self, parent_frame):     
+    def __init__(self, parent_frame):
+        """
+        Creates all necessary widgets for the RSA class user interface
+
+        Creates all the necessary entry boxes, lables and buttons for the RSA frame invluding 
+        the generate keyts button and validate keys button, to call their respected functions
+
+        Args:
+        parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
+        """     
         self.parent_frame = parent_frame
         Label(self.parent_frame, text = "Enter string to encrypt: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=40)
         self.entry = Entry(parent_frame, width=35)
@@ -35,6 +44,18 @@ class RSA():
         self.validate_button.place(x = 465, y = 295)
 
     def rsa_menu(self):
+        """
+        rsa_menu function is called when the generate keys button is selected
+         
+        Acts as a checker, to check whether certain parameter as filled
+        in order to generate the keys, if they are not errors boxes are produced
+
+        The menu also calls the generate_keys function to generate the private and public key as
+        well as the prime product of the primes seleted during key generation
+
+        Once done, specific buttons are enabled and disabled so the user cannot cause the program to
+        break or act incorrectly
+        """
         self.plaintext = self.entry.get()
         self.pub_key = self.entry_public_key.get()
         self.pri_key = self.entry_private_key.get()
@@ -53,6 +74,16 @@ class RSA():
         self.validate_button["state"] = "disabled"
         
     def validate_keys(self):
+        """
+        Validate keys function is called when the validate keys button is selected
+
+        The function gets the current values entered into the public and private key entries
+        as well as the modulus, which are then tested to see if they are a valid pair of keys
+        and modulus
+
+        This is done as, if the keys and modulus did not match, then encrypted text would be produced
+        buit when decrypted would output the incorrect plaintext
+        """
         self.plaintext = self.entry.get()
         self.pub_key = self.entry_public_key.get()
         self.pri_key = self.entry_private_key.get()
@@ -97,7 +128,7 @@ class RSA():
     def generate_keys(self):
         """
         Used to generate both the public and private keys for enrypting and decrypting
-        user strings
+        user plaintext.
 
         To genertate keys:
             - Select two prime number, P1 and P2
@@ -112,7 +143,6 @@ class RSA():
         Then to select private key (I), select random number:
             - Product of I (private) and B (public) divided by the totient must have a remainder of 1
             so (B x I) mod T = 1    
-        
             
         Returns:
         public_key
@@ -140,17 +170,42 @@ class RSA():
             public_key = random.randint(min_prime, max_prime)
             valid_public_key = self.check_public_key(prime_totient, public_key)
 
-        private_key = pow(public_key, -1, prime_totient)
+        private_key = self.power_value(public_key, -1, prime_totient)
         return public_key, private_key, prime_product
     
 
     def is_prime(self, num_check):
+        """
+        Subfunction used to check whether a number is prime or not
+
+        Args:
+        num_check (int): The value to check if its prime or not
+
+        Returns:
+        bool: Represents if the integer parameter is prime or not
+        """
         for i_index in range(2, num_check):
             if num_check % i_index == 0:
                 return False
         return True
     
     def check_public_key(self, totient, public_key):
+        """
+        Checks specific conditions against the public key to see if the public key is valid
+        or not
+
+        for the key to be valid it must not be greater then the totitent, must be prime and 
+        must not be a factor of the totient
+
+        if all conditions are met then the public key is valid
+        
+        Args:
+        totient (int): The totient of the the tow primes produced in the generate_keys function
+        public_key (int): The value of the public_key being tested
+
+        Returns:
+        bool: Represents if the key is public or not
+        """
         factor_totient = totient % public_key
         if public_key > totient:
             return False
@@ -162,6 +217,16 @@ class RSA():
         
         
     def divide_string(self, word):
+        """
+        Divides the users plaintext in seperate ascii values so that the public or private keys
+        can be applied to it
+        
+        Args:
+        word (string): Users plaintext
+
+        Returns:
+        ascii_array (list): list of all letters in word parameter, now seprate and in their ascii form
+        """
         word_array = []
         ascii_array = []
         for letter in word:
@@ -175,14 +240,13 @@ class RSA():
     
     def encrpyt(self):
         """
-        Used public key to encrypt the message 
+        Uses public key to encrypt the message as well as the product of the primes used earlier
+        to calculate the totient  
         
         to encrypt the message, the message value must be raised by the public key, then modded
         by the product of the primes, to get the cipher text
 
-        Both encyption and decryption can also be done when swapping the key values
-
-        message^B mod N = cipher
+        message^pri_key mod prime_product = cipher_text
         """
         self.encrypted_array = []
         plaintext_ascii = self.divide_string(self.plaintext)
@@ -199,14 +263,14 @@ class RSA():
     
     def decrypt(self):
         """
-        uses private key to decrpyt the message
+        Uses the private key to decrpyt the message
 
-        to decrypt the message, the cipher text value must be raised by the private key, then modded
-        by the product of the primes, to get the cipher text
+        To decrypt the message, the cipher text value must be raised by the private key, then modded
+        by the product of the primes (modulus), to get the cipher text
 
-        Both encyption and decryption can also be done when swapping the key values
+        Once decypted the plaintext is combined with each character to reassemble the orginal message
         
-        Cipher^I mod N = message
+        Cipher^pub_key mod prime_product = message
         """
         self.decypted_ascii_values = []
         self.decypted_values = []
@@ -226,6 +290,22 @@ class RSA():
         self.gen_button["state"] = "normal"
 
     def power_value(self, value, key, modulus):
+        """
+        Calculates the power of a integer as well as modding the value
+
+        This subfunction is used instead of the normal line of code, (value**key) % modulus
+        as this would usually produce values incredibly large that the system would not be able
+        to compute and would crash the program
+
+        Args:
+        value (int): base value being powered
+        key (int): Power value being used with value
+        modulus (int): The modulus value being used to encrypt with
+
+        Returns:
+        power_value (int): The new value produced, which represents part of the palintext encrypted
+        """
+
         power_value = 1
         for values in range(key):
             if key & 1:

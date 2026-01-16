@@ -32,12 +32,6 @@ class fibonacci():
         
         Then will repeatedly reassign the first value as second value, and then
         reassign the second value as the sum of both, until it reaches then inputted number
-
-        Args:
-        None
-
-        Returns:
-        None
         """
         nth_number = self.entry.get()
         if nth_number == "" or nth_number.isdigit() == False:

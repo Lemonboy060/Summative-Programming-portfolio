@@ -50,7 +50,7 @@ class palindrome():
             right (int): Last index of the substring
 
             Return:
-            self.memory[(left, right)] (bool): 
+            self.memory[(left, right)] (bool): Represents whether a specific substring is a plaindrome or not
             """
             
             if(left, right) in self.memory:
