@@ -14,19 +14,25 @@ class RSA():
         Label(self.parent_frame, text = "Enter Private Key: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=120)
         self.entry_private_key = Entry(parent_frame, width=35)
         self.entry_private_key.place(x = 202, y = 122)
+        Label(self.parent_frame, text = "Enter modulus for keys: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=160)
+        self.entry_modulus = Entry(parent_frame, width=35)
+        self.entry_modulus.place(x = 202, y = 162)
 
-        Label(self.parent_frame, text = "Encrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=160)
-        Label(self.parent_frame, text = "Decrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=200)
+        Label(self.parent_frame, text = "Encrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=200)
+        Label(self.parent_frame, text = "Decrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=240)
 
         self.encrypt_button = Button(self.parent_frame, text="Encrypt", font = (20), command=self.encrpyt)
-        self.encrypt_button.place(x = 175, y = 255)
+        self.encrypt_button.place(x = 175, y = 295)
         self.decrypt_button = Button(self.parent_frame, text="Decrypt", font = (20), command=self.decrypt)
-        self.decrypt_button.place(x = 260, y = 255)
+        self.decrypt_button.place(x = 260, y = 295)
 
         self.encrypt_button["state"] = "disabled"
         self.decrypt_button["state"] = "disabled"
 
-        Button(self.parent_frame, text="Generate keys", font = (20), command=self.rsa_menu).place(x = 340, y = 255)
+        self.gen_button = Button(self.parent_frame, text="Generate keys", font = (20), command=self.rsa_menu)
+        self.gen_button.place(x = 340, y = 295)
+        self.validate_button = Button(self.parent_frame, text="Validate keys", font = (20), command=self.validate_keys)
+        self.validate_button.place(x = 465, y = 295)
 
     def rsa_menu(self):
         self.plaintext = self.entry.get()
@@ -36,19 +42,51 @@ class RSA():
         if self.plaintext == "":
             messagebox.showerror("Error", "Please enter plaintext")
             return
-
         if self.pub_key == "" and self.pri_key == "":
             self.pub_key, self.pri_key, self.prime_product = self.generate_keys()
-        elif len(self.pub_key) > 0 and len(self.pri_key) > 0:
-            messagebox.showerror("Error", "Please enter valid key")
-            return
         else:
             messagebox.showerror("Error", "Please enter values for both keys or none to generate keys")
             return 
         
         self.encrypt_button["state"] = "normal"
         self.decrypt_button["state"] = "normal"
+        self.validate_button["state"] = "disabled"
         
+    def validate_keys(self):
+        self.plaintext = self.entry.get()
+        self.pub_key = self.entry_public_key.get()
+        self.pri_key = self.entry_private_key.get()
+        self.mod = self.entry_modulus.get()
+
+        if self.plaintext == "":
+            messagebox.showerror("Error", "Please enter plaintext")
+            return
+        if self.pub_key == "" or self.pri_key == "" or self.mod == "":
+            messagebox.showerror("Error", "Please enter Public key, private key and modulus")
+            return
+
+        test_pub_key = int(self.pub_key)
+        test_pri_key = int(self.pri_key)
+        test_mod = int(self.mod)
+
+        test_value = 60
+
+        encryp = (pow(test_value, test_pri_key, test_mod))
+        decryp = (pow(encryp, test_pub_key, test_mod))
+
+        if decryp == test_value:
+            self.valid_keys = True
+            self.prime_product = test_mod
+            self.pri_key = test_pri_key
+            self.pub_key = test_pub_key
+            messagebox.showinfo("Valid", "Keys and modulus entered are valid")
+            self.encrypt_button["state"] = "normal"
+            self.decrypt_button["state"] = "normal"
+            self.gen_button["state"] = "disabled"
+        else:
+            self.valid_keys = False
+            messagebox.showerror("Error", "Keys and modulus entered are invalid")
+
 
     
     def generate_keys(self):
@@ -153,7 +191,7 @@ class RSA():
         encypted_plaintext = "".join(str(str_value) for str_value in self.encrypted_array)
 
         encryption = Label(self.parent_frame, text = f"{encypted_plaintext}", bg = "Light Blue", font = (20), fg = "black")
-        encryption.place(x=140, y=160)
+        encryption.place(x=140, y=200)
 
         self.encrypt_button["state"] = "disabled"
     
@@ -180,6 +218,7 @@ class RSA():
         original_plaintext = ", ".join(self.decypted_values)
 
         original = Label(self.parent_frame, text = f"{original_plaintext}", bg = "Light Blue", font = (20), fg = "black")
-        original.place(x=140, y=200)
+        original.place(x=140, y=240)
 
         self.decrypt_button["state"] = "disabled"
+        self.gen_button["state"] = "normal"
