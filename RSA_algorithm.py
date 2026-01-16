@@ -23,25 +23,25 @@ class RSA():
         Label(self.parent_frame, text = "Enter Private Key: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=120)
         self.entry_private_key = Entry(parent_frame, width=35)
         self.entry_private_key.place(x = 202, y = 122)
-        Label(self.parent_frame, text = "Enter modulus for keys: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=160)
+        Label(self.parent_frame, text = "Enter modulus for keys: ", bg = "light blue", font = (20), fg = "black").place(x=450, y=40)
         self.entry_modulus = Entry(parent_frame, width=35)
-        self.entry_modulus.place(x = 202, y = 162)
+        self.entry_modulus.place(x =650, y = 42)
 
-        Label(self.parent_frame, text = "Encrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=200)
-        Label(self.parent_frame, text = "Decrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=240)
+        Label(self.parent_frame, text = "Encrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=450, y=80)
+        Label(self.parent_frame, text = "Decrypted String: ", bg = "light blue", font = (20), fg = "black").place(x=450, y=120)
 
         self.encrypt_button = Button(self.parent_frame, text="Encrypt", font = (20), command=self.encrpyt)
-        self.encrypt_button.place(x = 175, y = 295)
+        self.encrypt_button.place(x = 175, y = 165)
         self.decrypt_button = Button(self.parent_frame, text="Decrypt", font = (20), command=self.decrypt)
-        self.decrypt_button.place(x = 260, y = 295)
+        self.decrypt_button.place(x = 260, y = 165)
 
         self.encrypt_button["state"] = "disabled"
         self.decrypt_button["state"] = "disabled"
 
         self.gen_button = Button(self.parent_frame, text="Generate keys", font = (20), command=self.rsa_menu)
-        self.gen_button.place(x = 340, y = 295)
+        self.gen_button.place(x = 340, y = 165)
         self.validate_button = Button(self.parent_frame, text="Validate keys", font = (20), command=self.validate_keys)
-        self.validate_button.place(x = 465, y = 295)
+        self.validate_button.place(x = 465, y = 165)
 
     def rsa_menu(self):
         """
@@ -150,7 +150,7 @@ class RSA():
         prime_product
         """
         min_prime = 101
-        max_prime = 10007
+        max_prime = 5003
 
         valid_prime1 = False
         valid_prime2 = False
@@ -170,7 +170,7 @@ class RSA():
             public_key = random.randint(min_prime, max_prime)
             valid_public_key = self.check_public_key(prime_totient, public_key)
 
-        private_key = self.power_value(public_key, -1, prime_totient)
+        private_key = pow(public_key, -1, prime_totient)
         return public_key, private_key, prime_product
     
 
@@ -257,7 +257,7 @@ class RSA():
         encypted_plaintext = "".join(str(str_value) for str_value in self.encrypted_array)
 
         encryption = Label(self.parent_frame, text = f"{encypted_plaintext}", bg = "Light Blue", font = (20), fg = "black")
-        encryption.place(x=140, y=200)
+        encryption.place(x=650, y=80)
 
         self.encrypt_button["state"] = "disabled"
     
@@ -284,7 +284,7 @@ class RSA():
         original_plaintext = "".join(self.decypted_values)
 
         original = Label(self.parent_frame, text = f"{original_plaintext}", bg = "Light Blue", font = (20), fg = "black")
-        original.place(x=140, y=240)
+        original.place(x=650, y=120)
 
         self.decrypt_button["state"] = "disabled"
         self.gen_button["state"] = "normal"

@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from palindrome_algorithm import palindrome
 from factorial_algorithm import factorial
 from fibonacci_algorithm import fibonacci
@@ -74,41 +75,11 @@ class interface:
         self.frame.grid(row=0, column=0, sticky="nsew")
         self.frames_dict[algorithm_name] = self.frame
 
-        if algorithm_name == "Palindrome":
-            palindrome(self.frame)
-            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
-            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
-        elif algorithm_name == "Factorial":
-            factorial(self.frame)
-            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
-            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
-        elif algorithm_name == "Fibonacci":
-            fibonacci(self.frame)
-            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
-            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
-        elif algorithm_name == "Randomised":
-            randomised(self.frame)
-            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
-            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
-        elif algorithm_name == "Sorting":
-            sorting(self.frame)
-            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
-            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
-        elif algorithm_name == "Search":
-            search(self.frame)
-            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
-            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
-        elif algorithm_name == "Brute force":
-            merge(self.frame)
-            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
-            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
-        elif algorithm_name == "RSA":
-            RSA(self.frame)
-            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
-            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 295)
-        else:
-            Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
-            Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
+        factory = factory_superclass()
+        factory.create_frame(algorithm_name, self.frame)
+
+        Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
+        Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
 
     
     def create_button_widgets(self):
@@ -128,7 +99,30 @@ class interface:
             new_button.place(x = 10, y = y_pos)
             y_pos += 50
 
+class factory_superclass():
+    def create_frame(self, algorithm_name, frame):
+        if algorithm_name == "Palindrome":
+            palindrome(frame)
+        elif algorithm_name == "Factorial":
+            factorial(frame)
+        elif algorithm_name == "Fibonacci":
+            fibonacci(frame)
+        elif algorithm_name == "Randomised":
+            randomised(frame)
+        elif algorithm_name == "Sorting":
+            sorting(frame)
+        elif algorithm_name == "Search":
+            search(frame)
+        elif algorithm_name == "Brute force":
+            merge(frame)
+        elif algorithm_name == "RSA":
+            RSA(frame)
+        else:
+            messagebox.showerror("Error")
+
 if __name__ == "__main__":
     root = Tk()           
     app = interface(root) 
     root.mainloop()       
+
+
