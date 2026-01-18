@@ -153,9 +153,12 @@ class RSA():
             so (B x I) mod T = 1    
             
         Returns:
-        public_key
-        private_key
-        prime_product
+        public_key (int): Valid public key randomly generated
+        private_key (int): Valid public key randomly generated
+        prime_product (int): Product of the two random primes
+
+        This video was used for the basis of my understanind for RSA:
+        https://www.youtube.com/watch?v=Pq8gNbvfaoM&list=LL
         """
         min_prime = 101
         max_prime = 5003
@@ -313,6 +316,9 @@ class RSA():
 
         Returns:
         power_value (int): The new value produced, which represents part of the palintext encrypted
+
+        This link was used as a basis for the power_value function:
+        https://www.geeksforgeeks.org/computer-networks/rsa-algorithm-cryptography/
         """
 
         power_value = 1
