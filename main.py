@@ -22,6 +22,7 @@ class interface:
         root (Tk): Main Tkinter function used to create all tkinter widgets and frames
         """
         self.root = root
+        self.mediator = mediator_pattern(self.root)
         self.all_algo = ["Search","Sorting","RSA","Factorial","Randomised","Brute force","Fibonacci","Palindrome"]
         self.frames_dict = {}
 
@@ -76,7 +77,7 @@ class interface:
         self.frames_dict[algorithm_name] = self.frame
 
         factory = factory_superclass()
-        factory.create_frame(algorithm_name, self.frame)
+        factory.create_frame(algorithm_name, self.frame, self.mediator)
 
         Label(self.frame, text = f"{algorithm_name} Algorithm", bg = "light blue", font = (20), fg = "black").place(x = 10)
         Button(self.frame, text="Back to Main Menu", font = (20), command=lambda: self.show_frame("Main menu")).place(x = 10, y = 165)
@@ -100,25 +101,116 @@ class interface:
             y_pos += 50
 
 class factory_superclass():
-    def create_frame(self, algorithm_name, frame):
+    """
+    The factory_superclass is part of the factory design pattern and is designed to 
+    create/initialise all the required classes and objects that the program would require
+
+    The factory class also incoprates both the composite and mediator patterns, where all
+    the classes/frames are categorised and some are intialsed with the mediator, if certain
+    functions are required
+    """
+    def create_frame(self, algorithm_name, frame, mediator):
+        """
+        creat_frame goes through all the possible frames that are avalible and intialises them
+
+        They are also categorised as part of the comnposite pattern
+        
+        Args:
+        algorithm_name (string): The specific name of the algorithm being intalised
+        frame (Frame): The frame of the algorithm being intialised
+        mediator (mediator_pattern): The mediator pattern
+        """
+
+        self.mediator = mediator
+
+        sorting_algorithms = composite_grouping("sorting")
+        calculating_algorithms = composite_grouping("Calculating")
+        encryption_algorithms = composite_grouping("encryption")
+        random_algorithms = composite_grouping("random")
+
         if algorithm_name == "Palindrome":
             palindrome(frame)
+            calculating_algorithms.append(algorithm_name)
         elif algorithm_name == "Factorial":
             factorial(frame)
+            calculating_algorithms.append(algorithm_name)
         elif algorithm_name == "Fibonacci":
             fibonacci(frame)
+            calculating_algorithms.append(algorithm_name)
         elif algorithm_name == "Randomised":
             randomised(frame)
+            random_algorithms.append(algorithm_name)
         elif algorithm_name == "Sorting":
             sorting(frame)
+            sorting_algorithms.append(algorithm_name)
         elif algorithm_name == "Search":
             search(frame)
+            sorting_algorithms.append(algorithm_name)
         elif algorithm_name == "Brute force":
             merge(frame)
+            sorting_algorithms.append(algorithm_name)
         elif algorithm_name == "RSA":
-            RSA(frame)
+            RSA(frame, self.mediator)
+            encryption_algorithms.append(algorithm_name)
         else:
             messagebox.showerror("Error")
+
+class composite_grouping():
+    """
+    The composite grouping class is part of the composite design pattern and categorises
+    different algorithms to four types of algorithm: sorting, Calculating, encryption, 
+    random
+    """
+    def __init__(self, category):
+        self.category = category
+        self.category_nodes = []
+
+    def append(self,algorithm_name):
+        """
+        Adds a specific algorithm to their corresponging category
+        
+        Args:
+        algorithm_name(string): name of the algorithm being added to a category
+        """
+        self.category_nodes.append(algorithm_name)
+
+class mediator_pattern():
+    """
+    Part of the mediator design pattern and acts as a mediator for other classes to 
+    perform specific functions,  which for this class is to desiable or enable specific 
+    buttons in other classes
+    """
+    def __init__(self, root):
+        self.root = root
+        self.buttons = {}
+    
+    def add_buttons(self, button_name, tkinter_button):
+        """
+        Registers specific buttons to the buttons list so they may be enabled or disable
+        
+        Args:
+        button_name(string): The specific name of the button
+        tikinter_button(Button): The actual button 
+        """
+        self.buttons[button_name] = tkinter_button
+    
+    def disable_button(self, button_name):
+        """
+        Disables a specific button within the buttons dictionary
+        
+        Args:
+        button_name(string): Name of the button to be disabled
+        """
+        self.buttons[button_name]["state"] = "disabled"
+    
+    def enable_button(self, button_name):
+        """
+        Enables a specific button within the buttons dictionary
+
+        Args:
+        button_name(string): Name of the button to be enabled
+        """
+        self.buttons[button_name]["state"] = "normal"
 
 if __name__ == "__main__":
     root = Tk()           

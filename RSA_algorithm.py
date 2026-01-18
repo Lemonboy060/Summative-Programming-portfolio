@@ -3,7 +3,7 @@ from tkinter import messagebox
 import random
 
 class RSA():
-    def __init__(self, parent_frame):
+    def __init__(self, parent_frame, mediator):
         """
         Creates all necessary widgets for the RSA class user interface
 
@@ -14,6 +14,7 @@ class RSA():
         parent_frame (tkinter.Frame): The class's frame, which will contain all the relevant widgets 
         """     
         self.parent_frame = parent_frame
+        self.mediator = mediator
         Label(self.parent_frame, text = "Enter string to encrypt: ", bg = "light blue", font = (20), fg = "black").place(x=10, y=40)
         self.entry = Entry(parent_frame, width=35)
         self.entry.place(x = 202, y = 42)
@@ -35,13 +36,19 @@ class RSA():
         self.decrypt_button = Button(self.parent_frame, text="Decrypt", font = (20), command=self.decrypt)
         self.decrypt_button.place(x = 260, y = 165)
 
-        self.encrypt_button["state"] = "disabled"
-        self.decrypt_button["state"] = "disabled"
+        self.mediator.add_buttons("Encrypt_button", self.encrypt_button)
+        self.mediator.add_buttons("Decrypt_button", self.decrypt_button)
+
+        self.mediator.disable_button("Encrypt_button")
+        self.mediator.disable_button("Decrypt_button")
 
         self.gen_button = Button(self.parent_frame, text="Generate keys", font = (20), command=self.rsa_menu)
         self.gen_button.place(x = 340, y = 165)
         self.validate_button = Button(self.parent_frame, text="Validate keys", font = (20), command=self.validate_keys)
         self.validate_button.place(x = 465, y = 165)
+
+        self.mediator.add_buttons("Generate_button", self.gen_button)
+        self.mediator.add_buttons("Validate_button", self.validate_button)
 
     def rsa_menu(self):
         """
@@ -69,9 +76,9 @@ class RSA():
             messagebox.showerror("Error", "Please enter values for both keys or none to generate keys")
             return 
         
-        self.encrypt_button["state"] = "normal"
-        self.decrypt_button["state"] = "normal"
-        self.validate_button["state"] = "disabled"
+        self.mediator.enable_button("Encrypt_button")
+        self.mediator.enable_button("Decrypt_button")
+        self.mediator.disable_button("Validate_button")
         
     def validate_keys(self):
         """
@@ -115,14 +122,15 @@ class RSA():
             self.pri_key = test_pri_key
             self.pub_key = test_pub_key
             messagebox.showinfo("Valid", "Keys and modulus entered are valid")
-            self.encrypt_button["state"] = "normal"
-            self.decrypt_button["state"] = "normal"
-            self.gen_button["state"] = "disabled"
+            self.mediator.enable_button("Encrypt_button")
+            self.mediator.enable_button("Decrypt_button")
+            self.mediator.disable_button("Generate_button")
+
         else:
             self.valid_keys = False
             messagebox.showerror("Error", "Keys and modulus entered are invalid")
-            self.encrypt_button["state"] = "disabled"
-            self.decrypt_button["state"] = "disabled"
+            self.mediator.disable_button("Encrypt_button")
+            self.mediator.disable_button("Decrypt_button")
 
     
     def generate_keys(self):
@@ -257,9 +265,9 @@ class RSA():
         encypted_plaintext = "".join(str(str_value) for str_value in self.encrypted_array)
 
         encryption = Label(self.parent_frame, text = f"{encypted_plaintext}", bg = "Light Blue", font = (20), fg = "black")
-        encryption.place(x=650, y=80)
+        encryption.place(x=600, y=80)
 
-        self.encrypt_button["state"] = "disabled"
+        self.mediator.disable_button("Encrypt_button")
     
     def decrypt(self):
         """
@@ -284,10 +292,11 @@ class RSA():
         original_plaintext = "".join(self.decypted_values)
 
         original = Label(self.parent_frame, text = f"{original_plaintext}", bg = "Light Blue", font = (20), fg = "black")
-        original.place(x=650, y=120)
+        original.place(x=600, y=120)
 
-        self.decrypt_button["state"] = "disabled"
-        self.gen_button["state"] = "normal"
+        self.mediator.disable_button("Decrypt_button")
+        self.mediator.enable_button("Generate_button")
+        self.mediator.enable_button("Validate_button")
 
     def power_value(self, value, key, modulus):
         """
