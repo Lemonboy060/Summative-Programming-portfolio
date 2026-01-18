@@ -2,7 +2,7 @@
 
 Implementation of required design patterns and algorithms for the Summative Programming Portfolio
 
-Following algorithms and patterns have een implmented:
+Following algorithms and patterns have been implemented:
 
 - RSA algorithm
 - Nth fibonacci numbers using dynamic programming
