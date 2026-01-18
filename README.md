@@ -1,6 +1,7 @@
 # Summative Programming Portfolio
 
 Implementation of required design patterns and algorithms for the Summative Programming Portfolio
+
 Following algorithms and patterns have een implmented:
 
 - RSA algorithm
